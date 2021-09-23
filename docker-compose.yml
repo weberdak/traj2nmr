@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  app:
+    image: weberdak/nmrfamsim:1.0.0
+    command: >
+      sh -c "/scripts/launch-jupyter"
+    ports:
+      - 8888:8888
+    volumes:
+      - ./:/app
+      - ./data:/data
+    environment:
+      - JUPYTER_PASSWORD=password
+      - JUPYTER_PORT=8888
