@@ -5,25 +5,27 @@ ENV PYTHONBUFFERED 1
 
 EXPOSE 8888
 
+ARG DEBIAN_FRONTEND=noninteractive
+
 COPY ./scripts /scripts
+COPY ./dependencies /dependencies
 
 RUN apt-get update && apt-get -y install tcsh && \
 	rm -rf /var/lib/apt/lists/* && \
- 	mkdir /spartaplus && cd /spartaplus && \
-	wget http://spin.niddk.nih.gov/bax/software/SPARTA+/sparta+.tar.Z && \
-	tar -zxvf sparta+.tar.Z && cd SPARTA+ && \
-	chmod +x install.com && ./install.com && \
-	rm /spartaplus/sparta+.tar.Z && \
+ 	cd /dependencies && tar -zxvf sparta+.tar.Z && \
+	cd SPARTA+ && chmod +x install.com && \
+	./install.com && rm /dependencies/sparta+.tar.Z && \
+	cd /dependencies && tar -xvf ppm_linux.tar && rm ppm_linux.tar && \
 	conda install jupyter && \
 	conda install -c conda-forge mdtraj && \
   	mkdir /app /data && \
 	useradd -ms /bin/bash app && \
-	chown -R app:app /data /app && \
+	chown -R app:app /data /app /dependencies && \
 	chmod -R 755 /data /app && \
 	chmod -R +x /scripts
 
-ENV SPARTAP_DIR=/spartaplus/SPARTA+
-ENV PATH="$PATH:$SPARTAP_DIR/bin"
+ENV SPARTAP_DIR=/dependencies/SPARTA+
+ENV PATH=$PATH:$SPARTAP_DIR/bin:/dependencies/ppm_linux
 ENV PYTHONPATH=/app:$PYTHONPATH
 
 WORKDIR /data
