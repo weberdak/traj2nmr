@@ -26,7 +26,13 @@ If you have all of the dependencies properly installed, the simply clone this re
 
 ```shell
 git clone https://github.com/weberdak/nmrfamsim
-python setup.py install
+sudo python setup.py install
+```
+
+or to install without root privileges:
+
+```shell
+python setup.py install --prefix ~/.local
 ```
 
 This will also take care of the required [Python modules](requirements.txt) as well.
