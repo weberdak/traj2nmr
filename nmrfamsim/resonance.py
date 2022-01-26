@@ -44,8 +44,11 @@ class Resonance():
 		self.method = method
 		
 
-	def average():
-		pass
+	def average(self):
+		# Order frames and get shifts
+		sorted_frames = sorted(self.shifts.keys())
+		shifts = [self.shifts[frame] for frame in sorted_frames]
+		return np.mean(shifts)
 
 
 	def converge():
