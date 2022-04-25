@@ -127,5 +127,5 @@ And add/modify the following lines of your ~/.bashrc file:
 
 .. code-block:: shell
 
-    export SHIFTX2_DIR=~/Programs/ppm_linux
+    export PPM_DIR=~/Programs/ppm_linux
     export PATH=$PATH:$SHIFTX2_DIR:$PPM_DIR
