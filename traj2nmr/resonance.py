@@ -22,7 +22,7 @@ class Resonance():
 		TO INCLUDE DETAILS
 	"""
 
-	def __init__(self, key, shifts, method):
+	def __init__(self, key, shifts):
 		"""Create new resonance object from chemical shifts output
 
 		Parameters
@@ -41,7 +41,6 @@ class Resonance():
 		self.resSeq = int(info[2])
 		self.name = info[3]
 		self.shifts = shifts
-		self.method = method
 		
 
 	def average(self):
