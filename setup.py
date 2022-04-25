@@ -1,8 +1,8 @@
 """
-A Python toolkit for computing solid-state NMR observables from MD simulations  
+A Python toolkit for computing NMR observables from MD simulations  
 """
 
-from distutils.core import setup
+from setuptools import setup
 import os
 import subprocess
 
@@ -77,7 +77,7 @@ with open('LICENSE') as f:
     LICENSE = f.read()
 
 LONG_DESCRIPTION = """
-A Python toolkit for computing solid-state NMR observables from MD simulations
+A Python toolkit for computing NMR observables from MD simulations
 """
 
 setup(
@@ -93,6 +93,7 @@ setup(
                 }, 
     platforms=['Linux'], 
     description='Python toolkit for NMR spectral simulation', 
-    requires=['numpy', 'matplotlib', 'pandas', 'mdtraj'], 
+    setup_requires=['Cython', 'numpy', 'matplotlib', 'pandas'],
+    install_requires=['sphinx', 'sphinx-rtd-theme', 'mdtraj'], 
     long_description=LONG_DESCRIPTION,
 )
