@@ -93,7 +93,7 @@ setup(
                 }, 
     platforms=['Linux'], 
     description='Python toolkit for NMR spectral simulation', 
-    setup_requires=['Cython', 'numpy', 'matplotlib', 'pandas'],
-    install_requires=['sphinx', 'sphinx-rtd-theme', 'mdtraj'], 
+    setup_requires=['Cython', 'numpy'],
+    install_requires=['matplotlib', 'pandas', 'sphinx', 'sphinx-rtd-theme', 'mdtraj'], 
     long_description=LONG_DESCRIPTION,
 )
