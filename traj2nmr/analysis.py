@@ -127,7 +127,8 @@ class Analysis:
 			if save_resonance:
 				
 				# Get MTRaj atom index of resonance
-				this needs to be done. save index to Resonance Object
+				# This needs to be done. save index to Resonance Object
+				# Needed for easily linking to dipolar couplings.
 
 				self.resonances[key] = Resonance(key, results[key])
 				saved += 1
@@ -171,7 +172,7 @@ class Analysis:
 		if verbose:
 			print('Found {} resonances matching query:'.format(len(to_return)))
 			for r in to_return:
-				print('{}.{}.{}.{}'.format(r.chainID, r.resName, r.resSeq, r.name)) 
+				print('{}.{}.{}.{}'.format(r.chainID, r.resName, r.resSeq, r.name))
 
 		return to_return
 
@@ -184,11 +185,38 @@ class Analysis:
 		keys: list
 			Resonance keys ordered by chainID
 		'''
+		temp_list = [(int(k.split('.')[0]), k.split('.')[1], int(k.split('.')[2]), k.split('.')[3]) for k in self.resonances.keys()]
+		temp_list = sorted(temp_list, key=lambda x: (x[0], x[2], x[3]))
+		return ['.'.join([str(k[0]), k[1], str(k[2]), k[3]]) for k in temp_list]
 
 
+	def write_resonances_to_csv(self, filename, verbose=True):
+		'''Write all average chemical shifts to CSV file
+		
+		Parameters
+		----------
+		filename: str
+			File name/path to output resonances
+		'''
+		with open(filename, 'w') as f:
+			n = 0
+
+			# Write header
+			f.write('chainID,resName,resSeq,name,shift\n')
+			for k in self.get_resonance_keys():
+				chainID = k.split('.')[0]
+				resName = k.split('.')[1]
+				resSeq = k.split('.')[2]
+				name = k.split('.')[3]
+				shift = self.resonances[k].average()
+				f.write('{0},{1},{2},{3},{4:.3f}\n'.format(chainID,resName,resSeq,name,shift))
+				n += 1
+
+		if verbose:
+			print('Average shifts of {} resonances written to \'{}\''.format(n, filename))
 
 
-	def getDipolarCouplings(self, index):
+	def get_dipolar_couplings(self, index):
 		'''Get all of the couplings this resonance is involved in (may have to alias the indices if homonuclear)
 		'''
 		return
