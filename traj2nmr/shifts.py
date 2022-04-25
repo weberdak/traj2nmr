@@ -155,45 +155,46 @@ def chemical_shifts_shiftx2(trj, frame, pH=5.0, temperature=298.00, stdout=False
 	return { '{}.{}.{}'.format(convert_resname(rn), ri, n): s for rn, ri, n, s in zip(d['resName'], d['resSeq'], d['name'], d['SHIFT']) }
 
 
-def chemical_shifts_traj(traj, method, first=0, last=[], stride=1,
+def chemical_shifts_traj(traj, method='shiftx2', first=0, last=[], stride=1,
 						  threads=1, notebook=False, verbose=True, **kwargs):
-	'''Higher level function of _chemical_shifts_<method> over multiple frames. Multiprocessing optionally enabled.
+	'''Higher level function of chemical_shifts_<method> over multiple 
+	frames. Multiprocessing optionally enabled but not working great.
 
 	Parameters
 	----------
 	trj: obj
 		MDTraj trajectory
 	method: str
-		Choices:
-			'spartaplus' (backbone only), 
-			'ppm' (backbone and methyl protons only)
-			'shiftx2' (backbone and sidechain atoms)
-
+		Program to compute shifts. Choices: 'shiftx2' (default), 
+		'spartaplus' and 'ppm'.
 	stride: int
-		Number of frames to skip
+		Skip every nth frame. Default: 1 (no skipping)
 	first: int
-		Index of first frame. Default: 0
+		Index of first frame. Default: 0 (first frame)
 	last: int
-		Index of last frame. Default: last frame
+		Index of last frame. Default: traj.n_frames-1 (last frame)
 	threads: int
 		Number of threads to run in parallel. Default: 1
 	notebook: bool
-		Set if using a Jupyter or iPython notebook. Clear cell output when progress is updated.
+		Set if using a Jupyter or iPython notebook. Clear cell output when 
+		progress is updated. Default: False
 	verbose: bool
-		Print progress to terminal
-	kwargs:
-		rename_HN: bool
-			Used by chemical_shifts_spartaplus()
-		pH: float
-			Used by chemical_shifts_shiftx2()
-		temperature: float
-			Used by chemical_shifts_shiftx2()
+		Print progress to terminal. Default: True
+	
+	Other Parameters
+	----------------
+	rename_HN: bool
+		Used by chemical_shifts_spartaplus()
+	pH: float
+		Used by chemical_shifts_shiftx2()
+	temperature: float
+		Used by chemical_shifts_shiftx2()
 
 	Returns
 	-------
 	shifts: dict()
-		shifts[chainID.resName.resID.name][frame]: float
-			Chemical shifts of atoms indexed by resName.resid.atomname, chain and frame
+		[chainID.resName.resID.name][frame]: float
+		Chemical shifts indexed by chainID.resName.resid.atomname then frame
 	'''
 	# Check if method is valid
 	valid_methods = ['spartaplus', 'ppm', 'shiftx2']
