@@ -1,4 +1,4 @@
-# Traj2NMR
+# Traj2NMR (under development)
 
 NMR spectral predictions from molecular dynamics simulation trajectories
 
