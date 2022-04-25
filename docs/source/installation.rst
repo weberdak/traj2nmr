@@ -15,6 +15,7 @@ Simply clone (or download) the Traj2NMR repository and install by:
 .. code-block:: shell
 
     git clone https://github.com/weberdak/traj2nmr
+    cd traj2nmr
     python setup.py install
 
 
