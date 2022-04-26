@@ -156,7 +156,8 @@ def chemical_shifts_shiftx2(trj, frame, pH=5.0, temperature=298.00, stdout=False
 
 
 def chemical_shifts_traj(traj, method='shiftx2', first=0, last=[], stride=1,
-						  threads=1, notebook=False, verbose=True, **kwargs):
+						  threads=1, notebook=False, verbose=True, 
+						  chainIDs=[0], **kwargs):
 	'''Higher level function of chemical_shifts_<method> over multiple 
 	frames. Multiprocessing optionally enabled but not working great.
 
@@ -173,6 +174,8 @@ def chemical_shifts_traj(traj, method='shiftx2', first=0, last=[], stride=1,
 		Index of first frame. Default: 0 (first frame)
 	last: int
 		Index of last frame. Default: traj.n_frames-1 (last frame)
+	chainIDs: list of int
+		List of chainIDs. Default: [0]
 	threads: int
 		Number of threads to run in parallel. Default: 1
 	notebook: bool
@@ -230,26 +233,27 @@ def chemical_shifts_traj(traj, method='shiftx2', first=0, last=[], stride=1,
 	time_start = time.time()
 	if threads == 1:
 		for chain in chains:
-			for frame in frames:
-				# Get chemical shifts using desired program
-				if method == 'spartaplus':
-					results = chemical_shifts_spartaplus(traj_stripped, frame, **kwargs)
-				if method == 'ppm':
-					results = chemical_shifts_ppm(traj_stripped, frame, **kwargs)
-				if method == 'shiftx2':
-					results = chemical_shifts_shiftx2(traj_stripped, frame, **kwargs)
+			if chain in chainIDs:
+				for frame in frames:
+					# Get chemical shifts using desired program
+					if method == 'spartaplus':
+						results = chemical_shifts_spartaplus(traj_stripped, frame, **kwargs)
+					if method == 'ppm':
+						results = chemical_shifts_ppm(traj_stripped, frame, **kwargs)
+					if method == 'shiftx2':
+						results = chemical_shifts_shiftx2(traj_stripped, frame, **kwargs)
 
-				# Write results to new dictionary
-				for key in results.keys():
-					new_key = str(chain)+'.'+key
-					if new_key not in shifts:
-						shifts[new_key] = dict()
-					shifts[new_key][frame] = results[key]
+					# Write results to new dictionary
+					for key in results.keys():
+						new_key = str(chain)+'.'+key
+						if new_key not in shifts:
+							shifts[new_key] = dict()
+						shifts[new_key][frame] = results[key]
 
-				# Get current progress from number frames from last atom saved
-				progress = round((100*len(shifts[new_key].keys())/len(frames)), 2)
-				rate = round((len(shifts[new_key].keys()) / ((time.time() - time_start)/60)), 2)
-				_verbose(method, chain, first, last, stride, rate, progress, notebook)
+					# Get current progress from number frames from last atom saved
+					progress = round((100*len(shifts[new_key].keys())/len(frames)), 2)
+					rate = round((len(shifts[new_key].keys()) / ((time.time() - time_start)/60)), 2)
+					_verbose(method, chain, first, last, stride, rate, progress, notebook)
 
 	# PARALLEL VERSION
 	if threads > 1:
