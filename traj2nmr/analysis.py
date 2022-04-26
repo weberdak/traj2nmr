@@ -1,6 +1,7 @@
 from numpy import save
 from .shifts import chemical_shifts_traj
 from .resonance import Resonance
+from .ucsf import gen_ucsf
 
 
 class Analysis:
@@ -13,9 +14,6 @@ class Analysis:
 		I.e., by running mdtraj.load(<coordinates file>, top=<topology file>)
 	resonances: dict
 		Dictionary of Resonance objects keyed by [chainID.resName.resID.name]
-	notebook: bool
-		Set to True if using a Jupyter of iPython notebook. Affects the way 
-		verbose is printed to cells. Default: False
 	"""
 
 	def __init__(self, trajectory):
@@ -216,7 +214,49 @@ class Analysis:
 			print('Average shifts of {} resonances written to \'{}\''.format(n, filename))
 
 
-	def get_dipolar_couplings(self, index):
-		'''Get all of the couplings this resonance is involved in (may have to alias the indices if homonuclear)
+	def _gen_shift_data(self):
+		'''Generate data tuples for gen_hsqc function'''
+		data = []
+		for k in self.get_resonance_keys():
+			#chainID = k.split('.')[0] Need gen_ucsf to support chainID
+			resName = k.split('.')[1]
+			resSeq = int(k.split('.')[2])
+			name = k.split('.')[3]
+			shift = round(self.resonances[k].average(), 3)
+			data.append((resSeq, resName, name, shift))
+		return data
+
+
+	def write_ucsf(self, type, out_prefix):
+		'''Generate a HSQC spectrum in Sparky UCSF format
 		'''
-		return
+		valid_types = ['nhsqc']
+		if type not in valid_types:
+			raise ValueError('Experiment type \'{}\' not supported. Supported'
+				' options include {}'.format(type, ', '.join(valid_types)))
+
+		data = self._gen_shift_data()
+
+
+		if type == 'nhsqc':
+			
+			intra_corr = [('H','N'),('HD21','ND2'),('HD22','ND2'),('HE21','NE2'),
+				('HE22','NE2'),('HE1','NE1')]
+			inter_corr = [0]
+			nuc1_label = '1H'
+			nuc2_label = '15N'
+			nuc1_freq = 600.00
+			nuc2_freq = 60.7639142
+			nuc1_center = 8.30
+			nuc2_center = 120.00
+			nuc1_sw = 8.00
+			nuc2_sw = 40.00
+			nuc1_size = 1024
+			nuc2_size = 1024
+			nuc1_lw = 20
+			nuc2_lw = 20
+
+		gen_ucsf(data, out_prefix, intra_corr, inter_corr, nuc1_label, nuc2_label, 
+    		nuc1_freq, nuc2_freq, nuc1_center, nuc2_center, nuc1_sw, nuc2_sw, 
+    		nuc1_size, nuc2_size, nuc1_lw, nuc2_lw)
+
