@@ -40,9 +40,9 @@
               <p class="caption" role="heading"><span class="caption-text">Manual</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#basic-setup">Basic setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-installation">Basic installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#setup-using-a-python-virtual-environment-recommended">Setup using a Python virtual environment (recommended)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dependencies">Dependencies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation-of-dependencies">Installation of dependencies</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#shiftx2">SHIFTX2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#sparta">SPARTA+</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ppm">PPM</a></li>
@@ -83,44 +83,43 @@
              
   <section id="installation">
 <span id="id1"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline"></a></h1>
-<p>This page explains how Traj2NMR and it’s dependencies are installed. Note that Traj2NMR contains wrappers for chemical shift prediction programs SHIFTX2, SPARTA+ and PPM, which need to be installed and in your PATH. Instructions for installing these packages are also detailed here. These packages also restrict Traj2NMR to running only on Linux operating systems.</p>
-<section id="basic-setup">
-<h2>Basic setup<a class="headerlink" href="#basic-setup" title="Permalink to this headline"></a></h2>
-<p>Python3.X and Python3.X-dev need to be installed first. If using Ubuntu 20.04, this is done by:</p>
+<section id="basic-installation">
+<h2>Basic installation<a class="headerlink" href="#basic-installation" title="Permalink to this headline"></a></h2>
+<p>Python3.X and Python3.X-dev need to be installed first. If using Ubuntu 20.04, this can be done by:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install python3.8 python3.8-dev
 </pre></div>
 </div>
-<p>Traj2NMR, including Python dependencies, can then be installed by cloning the GitHub repository and running setup.py:</p>
+<p>Traj2NMR, including Python dependencies, can then be installed by cloning the repository and running setup.py:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/weberdak/traj2nmr
 $ <span class="nb">cd</span> traj2nmr
 $ python setup.py install
 </pre></div>
 </div>
-<p>Note that Traj2NMR can only be used on Linux operating systems due to it’s dependance on SHIFTX2, PPM and SPARTA+ for computing chemical shifts. These must be installed separately and visible to your system $PATH. Full instructions for this are included in the next section.</p>
+<p>Note that Traj2NMR can only be used on Linux operating systems due to it’s dependance on SHIFTX2, PPM and SPARTA+ for chemical shift predictions. These must be installed separately and added to your $PATH variable. Full instructions for this are included below.</p>
 </section>
 <section id="setup-using-a-python-virtual-environment-recommended">
 <h2>Setup using a Python virtual environment (recommended)<a class="headerlink" href="#setup-using-a-python-virtual-environment-recommended" title="Permalink to this headline"></a></h2>
-<p>It is recommended, although not essential, to use a Python virtual environment. This is because Traj2NMR requires several dependencies that you may not want installed to your root installation. First, make sure Python3 and virtual environments are installed:</p>
+<p>It is recommended, although not essential, to use a Python virtual environment. This is because Traj2NMR requires several dependencies that you may not want installed to your root Python installation. First, make sure Python3 and virtual environments are installed. I.e., on Ubuntu 20.04:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install python3.8 python3.8-dev python3.8-venv
 </pre></div>
 </div>
-<p>Create a new virtual environment. For example, I like to create is under a ~/Programs directory in a python-venv folder:</p>
+<p>Create a new virtual environment. For example, I like to create these under a ~/Programs directory in a python-venv subfolder:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ mkdir -p ~/Programs/python-venv
 $ <span class="nb">cd</span> ~/Programs/python-venv
 $ python3.8 -m venv traj2nmr
 </pre></div>
 </div>
-<p>Now make an alias in your ~/.bashrc file as a shortcut for activating the environment. Add the following line and save:</p>
+<p>Now make an alias in your ~/.bashrc file as a shortcut for activating the environment. Add the following line:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">alias</span> <span class="nv">traj2nmr</span><span class="o">=</span><span class="s1">&#39;source ~/Programs/python-venv/traj2nmr/bin/activate&#39;</span>
 </pre></div>
 </div>
-<p>Now activate the environment by typing “traj2nmr” in the terminal. As per the basic setup, clone and install Traj2NMR in your preferred folder:</p>
+<p>Now you can activate the environment simply by typing “traj2nmr” into terminal. With the traj2nmr environment activated, clone and install Traj2NMR within your preferred folder:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/weberdak/traj2nmr
 $ <span class="nb">cd</span> traj2nmr
 $ python setup.py install
 </pre></div>
 </div>
-<p>Traj2NMR is most likely to used via Jupyter Notebook, in which case this new Python environment will need to be added to the underlying iPython kernel. To do this, with the traj2nmr environment activated, install Jupyter notebook then add the environment to the kernel:</p>
+<p>Traj2NMR is most likely to be used via a Jupyter Notebook, in which case the new Python environment will need to be added to the underlying iPython kernel. To do this, with the traj2nmr environment still activated, install Jupyter notebook and then add the environment to the kernel:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ pip install jupyter
 $ pip install ipykernel
 $ python -m ipykernel install --user --name<span class="o">=</span>traj2nmr
@@ -128,9 +127,9 @@ $ python -m ipykernel install --user --name<span class="o">=</span>traj2nmr
 </div>
 <p>You will now have the option to use the Traj2NMR environment when creating a new notebook.</p>
 </section>
-<section id="dependencies">
-<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline"></a></h2>
-<p>Traj2NMR requires external modules for computing chemical shifts. These are run by Traj2NMR first writing temporary input files to disk (i.e., PDB files for each frame of the trajectory saved to a hidden folder), the specified program is executed, and then the output files are read into Traj2NMR in the required data structure. It is recommended that SHIFTX2 is at least installed since it is the only one capable of computing both backbone and sidechain chemical shifts. However, SHIFTX2 is by far the slowest (~hours required to process a trajectory). Therefore, users may wish to compute backbone shifts for all frames (higher accuracy) using the faster PPM or SPARTA+ programs, and using SHIFTX2 to compute sidechain shifts from a smaller subset of frames.</p>
+<section id="installation-of-dependencies">
+<h2>Installation of dependencies<a class="headerlink" href="#installation-of-dependencies" title="Permalink to this headline"></a></h2>
+<p>Traj2NMR requires external programs for computing chemical shifts. These can be installed as per the following instructions.</p>
 <section id="shiftx2">
 <h3>SHIFTX2<a class="headerlink" href="#shiftx2" title="Permalink to this headline"></a></h3>
 <p>ShiftX2 is a bit tricky as it requires Python 2.7 and Java to run, and modifications to the code to prevent clashes with Python 3. First install Python2.7 and Java:</p>
@@ -142,7 +141,7 @@ $ python -m ipykernel install --user --name<span class="o">=</span>traj2nmr
 $ <span class="nb">cd</span> ~/Programs
 </pre></div>
 </div>
-<p>Note that the directory does not need to be “Programs”, we just use it here as an example. Get the latest ShiftX2 from the Wishart Lab (<a class="reference external" href="http://www.shiftx2.ca/download.html">http://www.shiftx2.ca/download.html</a>) and unpack it:</p>
+<p>Note that the directory does not need to be “Programs”, we just use it here as an example. Get ShiftX2 from the Wishart Lab website (<a class="reference external" href="http://www.shiftx2.ca/download.html">http://www.shiftx2.ca/download.html</a>) and unpack it:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ wget http://www.shiftx2.ca/download/shiftx2-v113-linux-20180808.tgz
 $ tar -xzvf shiftx2-v113-linux-20180808.tgz
 </pre></div>
@@ -153,16 +152,11 @@ $ awk <span class="s1">&#39;{ gsub(/python/, &quot;python2.7&quot;); print }&#39
 $ chmod +x shiftx2.py
 </pre></div>
 </div>
-<p>If this is not done, the script will execute these lines with Python 3.X and crash. Now finally add the directory to your PATH variable using a text editor (i.e., vim):</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ vim ~/.bashrc
-</pre></div>
-</div>
-<p>And add lines to the file:</p>
+<p>If this is not done, the script will execute these lines with Python 3.X and crash. Now add the directory to your PATH variable, in the ~/.bashrc file, using your preferred text editor. For example, add the following lines and save:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">SHIFTX2_DIR</span><span class="o">=</span>~/Programs/shiftx2-linux
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SHIFTX2_DIR</span>
 </pre></div>
 </div>
-<p>For new Linux users, the .bashrc file is loaded whenever you open a BASH terminal. The PATH variable tells the terminal what directories contain executable binaries and scripts (i.e., installed programs). Once added to the PATH, “shiftx2.py” can now be executed from any folder on your system.</p>
 </section>
 <section id="sparta">
 <h3>SPARTA+<a class="headerlink" href="#sparta" title="Permalink to this headline"></a></h3>
@@ -176,7 +170,7 @@ $ wget http://spin.niddk.nih.gov/bax/software/SPARTA+/sparta+.tar.Z
 $ tar -zxvf sparta+.tar.Z
 </pre></div>
 </div>
-<p>Change install.com script permission to executable and use it to install SPARTA+:</p>
+<p>Set executable permission for the install.com script an run it:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> SPARTA+
 $ chmod +x install.com
 $ ./install.com
@@ -187,11 +181,11 @@ $ ./install.com
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SHIFTX2_DIR</span>:<span class="nv">$PPM_DIR</span>:<span class="nv">$SPARTAP_DIR</span>/bin
 </pre></div>
 </div>
-<p>Note that the variable must be called “SPARTAP_DIR”, otherwise SPARTA+ won’t work. Note SPARTA+ is typically run from the CSH or TCSH environment, which is not visible to Traj2NMR (only the BASH environment is visable).</p>
+<p>Note that the variable must be called “SPARTAP_DIR”, otherwise SPARTA+ won’t work. Note SPARTA+ is typically run from the CSH or TCSH environment, which is not visible to Traj2NMR (only the BASH environment is visible).</p>
 </section>
 <section id="ppm">
 <h3>PPM<a class="headerlink" href="#ppm" title="Permalink to this headline"></a></h3>
-<p>PPM is relatively simple to install. However, first install OpenMP:</p>
+<p>PPM is relatively simple to install. However, you must first install OpenMP:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get install libomp-dev
 </pre></div>
 </div>
@@ -201,7 +195,7 @@ $ mkdir ppm_linux
 $ tar -xvf ppm_linux.tar -C ppm_linux
 </pre></div>
 </div>
-<p>And add/modify the following lines of your ~/.bashrc file:</p>
+<p>Then add/modify the following lines of your ~/.bashrc file:</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PPM_DIR</span><span class="o">=</span>~/Programs/ppm_linux
 <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$SHIFTX2_DIR</span>:<span class="nv">$PPM_DIR</span>
 </pre></div>
