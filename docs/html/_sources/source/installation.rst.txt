@@ -66,8 +66,8 @@ Traj2NMR is most likely to be used via a Jupyter Notebook, in which case the new
 You will now have the option to use the Traj2NMR environment when creating a new notebook.
 
 
-Installation of dependencies
-----------------------------
+Installing NMR dependencies
+---------------------------
 
 Traj2NMR requires external programs for computing chemical shifts. These can be installed as per the following instructions.
 
