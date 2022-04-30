@@ -6,6 +6,6 @@ __author__ = 'Daniel Weber'
 __author_email__ = 'dkweber@webersc.com'
 
 # Packages
-__all__ = ['Analysis']
+__all__ = ['Session']
 
-from .analysis import Analysis
+from .session import Session

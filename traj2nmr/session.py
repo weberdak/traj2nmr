@@ -4,7 +4,7 @@ from .resonance import Resonance
 from .ucsf import gen_ucsf
 
 
-class Analysis:
+class Session:
 	"""A Traj2NMR instance intialized from an MDTraj trajectory. Encapsulates
 	all functions and organises all data for spectral simulation.
 
