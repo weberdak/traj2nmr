@@ -15,7 +15,7 @@ Traj2NMR uses MDTraj for reading and analysing protein structure files and MD tr
     gb1_traj_static = md.load('2lgi.pdb')
     gb1_traj_simulated = md.load('2lgi_100ns.dcd', top='2lgi.psf')
 
-You may see a warning regarding cell vectors for the PB file - ignore this. These objects will now be used to initialise Traj2NMR sessions.
+You may see a warning regarding cell vectors for the PDB file - ignore this. These objects will now be used to initialise Traj2NMR sessions.
 
 
 Initialise Traj2NMR session
