@@ -1,9 +1,17 @@
-Traj2NMR Classes
-================
+Classes
+=======
 
 traj2nmr.Session
 ----------------
 
 .. autoclass:: traj2nmr.Session
-    :members: compute_shifts
+    :members: __init__, compute_shifts, query_resonances, 
+        get_resonance_keys, write_resonances_to_csv, 
+        write_ucsf
 
+
+traj2nmr.Resonance
+------------------
+
+.. autoclass:: traj2nmr.Resonance
+    :members: __init__, average, plot

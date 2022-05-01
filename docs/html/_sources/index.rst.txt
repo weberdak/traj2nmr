@@ -27,7 +27,7 @@ Traj2NMR is Python package for streamlining the computation of NMR observables f
 
 .. toctree::
    :maxdepth: 3
-   :caption: Classes Documentation
+   :caption: Documentation
    :hidden:
 
    source/classes.rst

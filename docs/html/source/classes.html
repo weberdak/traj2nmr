@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Traj2NMR Classes &mdash; Traj2NMR  documentation</title>
+  <title>Classes &mdash; Traj2NMR  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Tutorial 2: Computing Chemical Shifts" href="tutorial2.html" /> 
+    <link rel="prev" title="Tutorial 2: Chemical shifts" href="tutorial2.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,12 +43,13 @@
 <p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="tutorial1.html">Tutorial 1: Loading trajectories</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorial2.html">Tutorial 2: Computing Chemical Shifts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial2.html">Tutorial 2: Chemical shifts</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Classes Documentation</span></p>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Traj2NMR Classes</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Classes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#traj2nmr-session">traj2nmr.Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#traj2nmr-resonance">traj2nmr.Resonance</a></li>
 </ul>
 </li>
 </ul>
@@ -67,7 +68,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Traj2NMR Classes</li>
+      <li>Classes</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/source/classes.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -77,51 +78,184 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="traj2nmr-classes">
-<h1>Traj2NMR Classes<a class="headerlink" href="#traj2nmr-classes" title="Permalink to this headline"></a></h1>
+  <section id="classes">
+<h1>Classes<a class="headerlink" href="#classes" title="Permalink to this headline"></a></h1>
 <section id="traj2nmr-session">
 <h2>traj2nmr.Session<a class="headerlink" href="#traj2nmr-session" title="Permalink to this headline"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="traj2nmr.Session">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">traj2nmr.</span></span><span class="sig-name descname"><span class="pre">Session</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Session" title="Permalink to this definition"></a></dt>
-<dd><p>A Traj2NMR instance intialized from an MDTraj trajectory. Encapsulates
-all functions and organises all data for spectral simulation.</p>
-<dl class="simple">
-<dt>trajectory: MDTraj trajectory object</dt><dd><p>I.e., by running mdtraj.load(&lt;coordinates file&gt;, top=&lt;topology file&gt;)</p>
-</dd>
-<dt>resonances: dict</dt><dd><p>Dictionary of Resonance objects keyed by [chainID.resName.resID.name]</p>
+<dd><p>Primary class for executing Traj2NMR</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="traj2nmr.Session.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Session.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>Initialise Traj2NMR session</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>trajectory</strong> (class:<cite>mdtraj.Trajectory</cite>) – MDTraj trajectory</p>
 </dd>
 </dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="traj2nmr.Session.compute_shifts">
 <span class="sig-name descname"><span class="pre">compute_shifts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">backbone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sidechain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Session.compute_shifts" title="Permalink to this definition"></a></dt>
-<dd><p>Compute chemical shifts by chain and for all frames. Creates a 
-Resonance object for every residue in self.trajectory resolved by 
-chain. All resonances computed are stored in self.resonances.</p>
-<dl class="simple">
-<dt>backbone: bool</dt><dd><p>Save all backbone chemical shifts to self.resonances. Default: True</p>
-</dd>
-<dt>sidechain: bool</dt><dd><p>Save all sidechain chemical shifts to self.resonances. Default: True</p>
-</dd>
-<dt>overwrite: bool</dt><dd><p>Overwrite existing resonances. Default: True</p>
+<dd><p>Compute chemical shifts per chain, atom and frame. Results stored
+as traj2nmr.Resonance classes in self.resonances dictionary keyed by 
+‘chainID.resName.resID.name’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>backbone</strong> (<em>bool</em><em>, </em><em>optional</em>) – Save backbone shifts to instance, defaults to True</p></li>
+<li><p><strong>sidechain</strong> (<em>bool</em><em>, </em><em>optional</em>) – Save sidechain shifts to instance, defaults to True</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em><em>, </em><em>optional</em>) – Overwrite existing shifts, defaults to True</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print run status to terminal, defaults to True</p></li>
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>optional</em>) – Method to compute chemical shifts. Options ‘shiftx2’, 
+‘spartaplus’, ‘ppm’, defaults to ‘shiftx2’</p></li>
+<li><p><strong>stride</strong> (<em>int</em><em>, </em><em>optional</em>) – Compute shifts only for every nth frame, defaults to 1 
+(all frames in trajectory)</p></li>
+<li><p><strong>first</strong> (<em>int</em><em>, </em><em>optional</em>) – Frame to start, defaults to 0 (all frames)</p></li>
+<li><p><strong>last</strong> (<em>int</em><em>, </em><em>optional</em>) – Last frame, defaults to last frame</p></li>
+<li><p><strong>chainIDs</strong> (<em>list of int</em><em>, </em><em>optional</em>) – Limit computation to these chains, defaults to [0] 
+(first chain only)</p></li>
+<li><p><strong>threads</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of threads to run in parallel, defaults to 1.
+Note that threading does not work well at present</p></li>
+<li><p><strong>stdout</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print ShiftX2, SPARTA+, PPM messages to stdout, 
+defaults to False</p></li>
+<li><p><strong>rename_HN</strong> (<em>bool</em><em>, </em><em>optional</em>) – Rename HN in SPARTA+ output to H, defaults to True</p></li>
+<li><p><strong>pH</strong> (<em>float</em><em>, </em><em>optional</em>) – pH used for shiftx2 method, defaults to 5.0</p></li>
+<li><p><strong>temperature</strong> (<em>float</em><em>, </em><em>optional</em>) – Temperature, in Kelvin, used by shiftx2 method, 
+defaults to 298.00</p></li>
+</ul>
 </dd>
 </dl>
-<dl class="simple">
-<dt>method: str</dt><dd><p>Program to compute shifts. Choices: ‘shiftx2’ (default), 
-‘spartaplus’ and ‘ppm’.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="traj2nmr.Session.get_resonance_keys">
+<span class="sig-name descname"><span class="pre">get_resonance_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Session.get_resonance_keys" title="Permalink to this definition"></a></dt>
+<dd><p>Get an ordered list of self.resonance dictionary keys</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>List of dictionary keys (‘chainID.resName.resID.name’)</p>
 </dd>
-<dt>stride: int</dt><dd><p>Skip every nth frame. Default: 1 (no skipping)</p>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>list of str</p>
 </dd>
-<dt>first: int</dt><dd><p>Index of first frame. Default: 0 (first frame)</p>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="traj2nmr.Session.query_resonances">
+<span class="sig-name descname"><span class="pre">query_resonances</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chainID</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resSeq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Session.query_resonances" title="Permalink to this definition"></a></dt>
+<dd><p>Select resonances based on chainID, resName, resSeq and name values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chainID</strong> (<em>list of int</em><em>, </em><em>optional</em>) – Select resonances belonging to these chain IDs, 
+defaults to [] (all chainIDs)</p></li>
+<li><p><strong>resName</strong> (<em>list of str</em><em>, </em><em>optional</em>) – Select resonances having these residue names, 
+defaults to [] (all resNames)</p></li>
+<li><p><strong>resSeq</strong> (<em>list of int</em><em>, </em><em>optional</em>) – Select resonances having these residue IDs, 
+defaults to [] (all resSeqs)</p></li>
+<li><p><strong>name</strong> (<em>list of str</em><em>, </em><em>optional</em>) – Select resonances having these atom names, 
+defaults to [] (all atom names)</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – Print self.resonances keys belonging to returned 
+resonances, defaults to True</p></li>
+</ul>
 </dd>
-<dt>last: int</dt><dd><p>Index of last frame. Default: traj.n_frames-1 (last frame)</p>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>List of resonances matching query</p>
 </dd>
-<dt>threads: int</dt><dd><p>Number of threads to run in parallel. Default: 1</p>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list of class:<cite>traj2nmr.Resonance</cite></p>
 </dd>
-<dt>notebook: bool</dt><dd><p>Set if using a Jupyter or iPython notebook. Clear cell output when 
-progress is updated. Default: False</p>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="traj2nmr.Session.write_resonances_to_csv">
+<span class="sig-name descname"><span class="pre">write_resonances_to_csv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Session.write_resonances_to_csv" title="Permalink to this definition"></a></dt>
+<dd><p>Write average all average chemical shifts to CSV file 
+(chainID,resName,resSeq,name,average_shift)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>filename</strong> (<em>str</em>) – Output file name</p>
 </dd>
-<dt>verbose: bool</dt><dd><p>Print messages to terminal. Default: True</p>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="traj2nmr.Session.write_ucsf">
+<span class="sig-name descname"><span class="pre">write_ucsf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">experiment_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sfreq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xlw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Session.write_ucsf" title="Permalink to this definition"></a></dt>
+<dd><p>Generate spectra and peak list from current data in UCSF format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>experiment_type</strong> (<em>str</em>) – Experiment type, choices: ‘nhsqc’</p></li>
+<li><p><strong>out_prefix</strong> (<em>str</em>) – Prefix of output .ucsf and .list files</p></li>
+<li><p><strong>sfreq</strong> (<em>float</em><em>, </em><em>optional</em>) – Spectrometer 1H frequency in MHz, defaults to 600.00</p></li>
+<li><p><strong>xlw</strong> (<em>float</em><em>, </em><em>optional</em>) – X-dimension peak linewidth in Hz, defaults to 20.0</p></li>
+<li><p><strong>ylw</strong> (<em>float</em><em>, </em><em>optional</em>) – Y-dimension peak linewidth in Hz, defaults to 20.0</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>ValueError</strong> – If experiment_type is not supported</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="traj2nmr-resonance">
+<h2>traj2nmr.Resonance<a class="headerlink" href="#traj2nmr-resonance" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="traj2nmr.Resonance">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">traj2nmr.</span></span><span class="sig-name descname"><span class="pre">Resonance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shifts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Resonance" title="Permalink to this definition"></a></dt>
+<dd><p>Stores chemical shifts for an atom and analytical functions</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="traj2nmr.Resonance.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shifts</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Resonance.__init__" title="Permalink to this definition"></a></dt>
+<dd><p>initialise resonance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Descriptive key for atom ‘chainID.resName.resID.name’</p></li>
+<li><p><strong>shifts</strong> (<em>dict</em>) – Dictionary of chemical shifts (float) indexed by 
+frame (int)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="traj2nmr.Resonance.average">
+<span class="sig-name descname"><span class="pre">average</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Resonance.average" title="Permalink to this definition"></a></dt>
+<dd><p>Get to average chemical shift of resonance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Average chemical shift</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="traj2nmr.Resonance.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xlim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ylim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(8.0,</span> <span class="pre">4.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">textsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#traj2nmr.Resonance.plot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot chemical shifts and running average for resonance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xlim</strong> (<em>list of two floats</em><em>, </em><em>optional</em>) – X minimum and maximum [xmin,xmax], 
+defaults to [] (autogenerated)</p></li>
+<li><p><strong>ylim</strong> (<em>list of two floats</em><em>, </em><em>optional</em>) – Y minimum and maximum [ymin,ymax]</p></li>
+<li><p><strong>figsize</strong> (<em>tuple of two floats</em><em>, </em><em>optional</em>) – X and Y figure size in inches, defaults to (8.0,4.0)</p></li>
+<li><p><strong>textsize</strong> (<em>int</em><em>, </em><em>optional</em>) – Text size of labels, defaults to 16</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -135,7 +269,7 @@ progress is updated. Default: False</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="tutorial2.html" class="btn btn-neutral float-left" title="Tutorial 2: Computing Chemical Shifts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial2.html" class="btn btn-neutral float-left" title="Tutorial 2: Chemical shifts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
