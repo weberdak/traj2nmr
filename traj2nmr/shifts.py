@@ -1,7 +1,7 @@
 from .utils import convert_resname
 from collections import OrderedDict
 import concurrent.futures
-from IPython.display import display, clear_output
+#from IPython.display import display, clear_output
 from mdtraj.utils import enter_temp_directory
 from mdtraj.nmr.shift_wrappers import find_executable, _get_lines_to_skip
 import pandas as pd
@@ -303,9 +303,11 @@ def _verbose(method, chain, first, last, stride, rate, progress, notebook):
 	prog['Rate'] = str(rate)+'f/min'
 	prog['Progress'] = str(progress)+'%'
 	line = ', '.join([key+': '+prog[key] for key in prog.keys()])
+	notebook = False
 	if notebook:
-		clear_output(wait=True)
-		display(line)
+		#clear_output(wait=True)
+		#display(line)
+		pass
 	else:
 		print(line, end='\r')
 
