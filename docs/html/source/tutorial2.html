@@ -44,7 +44,12 @@
 <p class="caption" role="heading"><span class="caption-text">Tutorial</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="tutorial1.html">Tutorial 1: Loading trajectories</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial 2: Chemical shifts</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Tutorial 2: Chemical shifts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#default-settings">Default settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hybridising-methods">Hybridising methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-chemical-shift-data">Accessing chemical shift data</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
 <ul>
@@ -77,7 +82,27 @@
              
   <section id="tutorial-2-chemical-shifts">
 <span id="tutorial2"></span><h1>Tutorial 2: Chemical shifts<a class="headerlink" href="#tutorial-2-chemical-shifts" title="Permalink to this headline"></a></h1>
-<p>Insert instructions</p>
+<section id="default-settings">
+<h2>Default settings<a class="headerlink" href="#default-settings" title="Permalink to this headline"></a></h2>
+<p>Chemical shifts can computed once a Session has been initialised. For now we will just work with the GB1 trajectory loaded in Tutorial 1. By default, ShiftX2 will be used to predict chemical shifts for all frames in the trajectory, i.e.:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gb1_traj_simulated</span><span class="o">.</span><span class="n">compute_shifts</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Traj2NMR will also handle multiple chains if present by using the chainIDs option. For example, if two chains are present, you specify chainIDs=[0,1] in the argument and a set of chemical shifts will be recorded for each chain, which can be averaged later if desired (i.e., for a symmetric homodimer). If using ShiftX2, you also have the option of changing temperature and pH (temperature=298.00, pH=5.0 by default).</p>
+</section>
+<section id="hybridising-methods">
+<h2>Hybridising methods<a class="headerlink" href="#hybridising-methods" title="Permalink to this headline"></a></h2>
+<p>ShiftX2 is advantageous in that it computes both backbone and sidechains shifts, however, it is by far the slowest method. On my system, ShiftX2 computes shifts at rate of 34 frames per minute while SPARTA+ (method=’spartaplus’) runs at ~100 frames per minute (backbone only) and PPM (method=’ppm’) is the fastest at ~1600 frames per minute (backbone and methyl sidechains only). An important feature of Traj2NMR is that it can hybridise methods to balance performance with statistical accuracy. For example, let’s say we want to compute backbone atoms for all frames quickly with PPM, and fill the remaining sidechain atoms with ShiftX2, but for only 1/10th of the frames. This can be done by:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">gb1_traj_simulated</span><span class="o">.</span><span class="n">compute_shifts</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;ppm&#39;</span><span class="p">)</span>
+<span class="n">gb1_traj_simulated</span><span class="o">.</span><span class="n">compute_shifts</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;shiftx2&#39;</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">backbone</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In the second calculation, stride=10 prompts the Traj2NMR to only shifts every 10th frame, backbone=False prevents computed backbone shifts from being saved to the session (and overwriting those computed by PPM) and overwrite=False is needed if PPM-calculated methyl sidechain shifts need to be preserved. Note that in this example, specifying backbone=False and method=’shiftx2’ is somewhat redundant, but included here to help explain what is happening.</p>
+</section>
+<section id="accessing-chemical-shift-data">
+<h2>Accessing chemical shift data<a class="headerlink" href="#accessing-chemical-shift-data" title="Permalink to this headline"></a></h2>
+<p>Chemical shifts are saved into the Session as Resonance objects (one per atom), which contain the chemical shifts for every frame computed by the compute_shifts() function. More to come…</p>
+</section>
 </section>
 
 

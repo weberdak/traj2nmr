@@ -14,4 +14,4 @@ traj2nmr.Resonance
 ------------------
 
 .. autoclass:: traj2nmr.Resonance
-    :members: __init__, average, plot
+    :members: __init__, average, plot, get_shifts
