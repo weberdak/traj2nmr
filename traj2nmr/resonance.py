@@ -38,6 +38,16 @@ class Resonance():
 		pass
 
 
+	def get_shifts(self):
+		"""Return list of chemical shifts for resonance
+
+		:return: List of tuples (frame, shift)
+		:rtype: list of tuples (int, float)
+		"""		
+		sorted_frames = sorted(self.shifts.keys())
+		return [(frame, self.shifts[frame]) for frame in sorted_frames]
+
+
 	def plot(self, xlim=[], ylim=[], figsize=(8.0,4.0), textsize=16):
 		"""Plot chemical shifts and running average for resonance
 
