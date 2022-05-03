@@ -255,7 +255,8 @@ class Session:
 		sfreq=600.00, xlw=20.0, ylw=20.0):
 		"""Generate spectra and peak list from current data in UCSF format
 
-		:param experiment_type: Experiment type, choices: 'nhsqc'
+		:param experiment_type: Experiment type, choices: 
+			'nhsqc', 'nco', 'nca'
 		:type experiment_type: str
 		:param out_prefix: Prefix of output .ucsf and .list files
 		:type out_prefix: str
@@ -274,7 +275,7 @@ class Session:
 			'15N': -27.116,
 		}
 		# Raise exception of experiment not listed
-		valid_types = ['nhsqc']
+		valid_types = ['nhsqc', 'nco', 'nca']
 		if experiment_type not in valid_types:
 			raise ValueError('Experiment type \'{}\' not supported. Supported'
 				' options include {}'.format(type, ', '.join(valid_types)))
@@ -297,6 +298,36 @@ class Session:
 			nuc2_sw = 40.00
 			nuc1_size = 1024
 			nuc2_size = 1024
+
+		# Settings for through-bond NCO)
+		if experiment_type == 'nco':
+			intra_corr = [('C', 'N')]
+			inter_corr = [1]
+			nuc1_label = '13C'
+			nuc2_label = '15N'
+			nuc1_freq = sfreq*(gyros[nuc1_label]/gyros['1H'])
+			nuc2_freq = sfreq*(gyros[nuc2_label]/gyros['1H'])
+			nuc1_center = 175.00
+			nuc2_center = 120.00
+			nuc1_sw = 20.00
+			nuc2_sw = 40.00
+			nuc1_size = 1024
+			nuc2_size = 1024
+
+		# Settings for through-bond NCA
+		if experiment_type == 'nca':
+			intra_corr = [('CA', 'N')]
+			inter_corr = [0]
+			nuc1_label = '13C'
+			nuc2_label = '15N'
+			nuc1_freq = sfreq*(gyros[nuc1_label]/gyros['1H'])
+			nuc2_freq = sfreq*(gyros[nuc2_label]/gyros['1H'])
+			nuc1_center = 57.50
+			nuc2_center = 120.00
+			nuc1_sw = 40.00
+			nuc2_sw = 40.00
+			nuc1_size = 1024
+			nuc2_size = 1024			
 
 		# Output spectrum
 		gen_ucsf(data, out_prefix, intra_corr, inter_corr, nuc1_label, nuc2_label, 
