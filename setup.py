@@ -94,6 +94,6 @@ setup(
     platforms=['Linux'], 
     description='Python toolkit for NMR spectral simulation', 
     setup_requires=['Cython', 'numpy'],
-    install_requires=['matplotlib', 'pandas', 'mdtraj', 'nmrglue'], 
+    install_requires=['matplotlib', 'pandas', 'mdtraj', 'nmrglue', 'scipy'], 
     long_description=LONG_DESCRIPTION,
 )
