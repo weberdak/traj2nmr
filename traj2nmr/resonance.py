@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+
 from . import utils
 
 class Resonance():
@@ -66,6 +67,15 @@ class Resonance():
 		shifts = [self.shifts[frame] for frame in sorted_frames]
 		stats = utils.evolving_stats(shifts)
 		means = [mean for mean, stdev in stats]
+
+		# Get slope of final 20% for means
+		fp = int(len(sorted_frames)*0.2) * -1
+		# Only do if more than 3 points
+		#print(fp)
+		m, c = utils.fit_linear(sorted_frames[fp:], means[fp:])
+		fit = [utils.linear(x, m, c) for x in sorted_frames]
+		print(fp*m*-1)
+
 		#means_plus_stdev = [mean + stdev for mean, stdev in stats]
 		#means_minus_stdev = [mean - stdev for mean, stdev in stats]
 
@@ -81,6 +91,7 @@ class Resonance():
 			ax.set_ylim(*ylim)
 		ax.scatter(sorted_frames, shifts, c='black')
 		ax.plot(sorted_frames,means, c='black')
+		ax.plot(sorted_frames,fit, c='black')
 		#ax.plot(sorted_frames,means_plus_stdev, c='red')
 		#ax.plot(sorted_frames,means_minus_stdev, c='red')
 		plt.show()

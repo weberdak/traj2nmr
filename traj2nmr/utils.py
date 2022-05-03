@@ -1,4 +1,5 @@
 import numpy as np
+import scipy.optimize as optimization
 
 # GLOBALS
 
@@ -56,3 +57,16 @@ def evolving_stats(data):
 		else:
 			stdevs.append(np.nan)
 	return zip(means,stdevs)
+
+
+def linear(x, m, c):
+	"""Linear function"""
+	return m * x + c
+
+
+def fit_linear(x_data, y_data):
+	"""Return m and c"""
+	fit = optimization.curve_fit(linear, x_data, y_data)
+	return fit[0][0],fit[0][1]
+
+
