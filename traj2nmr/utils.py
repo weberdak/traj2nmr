@@ -11,6 +11,7 @@ CONVERT = {
 	'LEU': 'L', 'L': 'LEU', 'LYS': 'K', 'K': 'LYS', 'MET': 'M', 'M': 'MET', 'PHE': 'F', 'F': 'PHE',
 	'PRO': 'P', 'P': 'PRO', 'SER': 'S', 'S': 'SER', 'THR': 'T', 'T': 'THR', 'SER': 'S', 'S': 'SER',
 	'THR': 'T', 'T': 'THR', 'TRP': 'W', 'W': 'TRP', 'TYR': 'Y', 'Y': 'TYR', 'VAL': 'V', 'V': 'VAL',
+	'ASX': 'B', 'B': 'ASX',
 }
 
 def convert_resname(resname):
